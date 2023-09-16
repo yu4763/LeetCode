@@ -1,40 +1,31 @@
-class HistoryNode:
-    url: str
-    prev = None
-    next = None
-
-    def __init__(self, url):
-        self.url = url
-
 class BrowserHistory:
-    head = None
-    cur = None
+    history = []
+    curi = 0
+    lasti = 0
 
     def __init__(self, homepage: str):
-        node = HistoryNode(homepage)
-        self.head = node
-        self.cur = node
-
+        self.history = [homepage]
+        self.curi = 0
+        self.lasti = 0
+        
 
     def visit(self, url: str) -> None:
-        node = HistoryNode(url)
-        node.prev = self.cur
-        self.cur.next = node
-        self.cur = node
+        if self.curi == len(self.history)-1:
+            self.history.append(url)
+        else:
+            self.history[self.curi+1] = url
+        self.curi += 1
+        self.lasti = self.curi
 
 
     def back(self, steps: int) -> str:
-        for i in range(steps):
-            if self.cur.prev != None:
-                self.cur = self.cur.prev
-        return self.cur.url
+        self.curi = max(0, self.curi-steps)
+        return self.history[self.curi]
 
 
     def forward(self, steps: int) -> str:
-        for i in range(steps):
-            if self.cur.next != None:
-                self.cur = self.cur.next
-        return self.cur.url 
+        self.curi = min(self.lasti, self.curi+steps)
+        return self.history[self.curi]
         
 
 
