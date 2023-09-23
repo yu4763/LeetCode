@@ -1,14 +1,10 @@
+import sys
+
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        maxV = max(m-1, n-1)
-        minV = min(m-1, n-1)
-        start = m+n-2
-        result = 1
+        memo = [[1] * n for _ in range(m)]
 
-        for i in range(start, maxV, -1):
-            result *= i
-        
-        for i in range(minV, 0, -1):
-            result  = result // i
-        
-        return result
+        for i in range(1, m):
+            for k in range(1, n):
+                memo[i][k] = memo[i-1][k] + memo[i][k-1]
+        return memo[m-1][n-1]
