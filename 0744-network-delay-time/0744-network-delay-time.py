@@ -4,24 +4,22 @@ from collections import defaultdict
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         time_table = defaultdict(list)
-        for time in times:
-            node = time[0]
-            time_table[node].append(time)
+        for s, e, t in times:
+            time_table[s].append((t, e))
         
-        pq = []
+        heap = [(0, k)]
         min_times = {}
-        heappush(pq, (0, k))
 
-        while pq:
-            cur_time, node = heappop(pq)
+        while heap:
+            cur_time, node = heappop(heap)
             if not node in min_times:
                 min_times[node] = cur_time
-                for (_, e, t) in time_table[node]:
-                    heappush(pq, (cur_time+t, e))
+                if len(min_times) == n:
+                    return max(min_times.values())
+                for (t, e) in time_table[node]:
+                    heappush(heap, (cur_time+t, e))
         
-        if len(min_times) != n:
-            return -1
-        return max(min_times.values())
+        return -1
 
 
         
