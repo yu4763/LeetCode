@@ -20,6 +20,9 @@ class Solution:
                 if -num in n_set:
                     result.add((-num, 0, num))
         
+        if not n or not p:
+            return result
+        
         for i in range(len(n)):
             for k in range(i+1, len(n)):
                 target = -1*(n[i]+n[k])
