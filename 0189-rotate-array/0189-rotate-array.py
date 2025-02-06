@@ -3,9 +3,6 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        while k > len(nums):
-            k -= len(nums)
-        rotated = nums[-k:] + nums[:-k]
-        for i in range(len(rotated)):
-            nums[i] = rotated[i]
+        k %= len(nums)
+        nums[:] = nums[-k:] + nums[:-k]
         
