@@ -32,13 +32,6 @@ class RandomizedSet(object):
         """
         :rtype: int
         """
-        return random.sample(self.el, 1)[0] 
-
-        
-
-
-# Your RandomizedSet object will be instantiated and called as such:
-# obj = RandomizedSet()
-# param_1 = obj.insert(val)
-# param_2 = obj.remove(val)
-# param_3 = obj.getRandom()
+        items = list(self.el)  # Convert set to a list
+        randomIndex = random.randint(0, len(items) - 1)  # Generate random index
+        return items[randomIndex]  # Return random element
