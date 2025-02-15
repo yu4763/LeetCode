@@ -4,9 +4,13 @@ class Solution(object):
         :type citations: List[int]
         :rtype: int
         """
-        result = sorted(citations)
         N = len(citations)
-        hv = 0
-        for i in range(N):
-            hv = max(hv, min(result[i], N-i))
-        return hv
+        count = [0] * 1001
+        for c in citations:
+            count[c] += 1
+
+        total = 0
+        for i in range(1000, -1, -1):
+            total += count[i]
+            if total >= i:
+                return i
