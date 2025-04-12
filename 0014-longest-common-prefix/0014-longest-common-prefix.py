@@ -5,28 +5,14 @@ class Solution(object):
         :rtype: str
         """
         prefix = ""
-        pos = 0
-        while True:
-            found = True
-            target = ""
-            for el in strs:
-                if pos < len(el):
-                    if not target:
-                        target = el[pos]
-                        continue
-                    if el[pos] != target:
-                        found = False
-                        break
-                else:
-                    return prefix
-            
-            if found:
-                prefix += target
-                pos += 1
-            
-            else:
-                return prefix
-
-
-            
+        sorted_strs = sorted(strs)
+        first = sorted_strs[0]
+        last = sorted_strs[-1]
         
+        min_length = min(len(first), len(last))
+        for i in range(min_length):
+            if (first[i] != last[i]):
+                return prefix
+            prefix += first[i]
+        
+        return prefix
