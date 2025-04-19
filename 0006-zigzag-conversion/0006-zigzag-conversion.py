@@ -5,28 +5,23 @@ class Solution(object):
         :type numRows: int
         :rtype: str
         """
-        if numRows == 1:
+        if numRows == 1 or len(s) <= numRows:
             return s
             
         ans = ""
-        zig = [['' for _ in range(len(s))] for _ in range(numRows)]
-        up = True
-        i, k = 0, 0
+        rows = [''] * numRows
+        i = 0
+        step = 1
         for el in s:
-            zig[i][k] = el
-            if up and i == (numRows -1):
-                up = False
-            elif not up and i == 0:
-                up = True
-            if up:
-                i += 1
-            else:
-                i -= 1
-                k += 1
+            rows[i] += el
+            if i == 0:
+                step = 1
+            elif i == numRows - 1:
+                step = -1
+            
+            i += step
 
-        for l in zig:
-            ans += "".join(l)
-        return ans
+        return "".join(rows)
 
 
 
