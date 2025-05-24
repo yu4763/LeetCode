@@ -1,40 +1,33 @@
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        n, p, z = [], [], []
-        result = set()
-        for num in nums:
-            if num < 0:
-                n.append(num)
-            elif num > 0:
-                p.append(num)
+    def threeSum(self, nums: List[int]) -> List[List[int]]:    
+        def get_next(ordered, i, step):
+            cand = i + step
+            if cand < 0 or cand >= len(ordered):
+                return cand
+            if ordered[cand] == ordered[i]:
+                return get_next(ordered, cand, step)    
             else:
-                z.append(num)
-        
-        p_set = set(p)
-        n_set = set(n)
+                return cand
 
-        if z:
-            if len(z) >= 3:
-                result.add((0, 0, 0))
-            for num in p:
-                if -num in n_set:
-                    result.add((-num, 0, num))
-        
-        if not n or not p:
-            return result
-        
-        for i in range(len(n)):
-            for k in range(i+1, len(n)):
-                target = -1*(n[i]+n[k])
-                if target in p_set:
-                    result.add(tuple(sorted([n[i], n[k], target])))
-        
-        for i in range(len(p)):
-            for k in range(i+1, len(p)):
-                target = -1*(p[i]+p[k])
-                if target in n_set:
-                    result.add(tuple(sorted([p[i], p[k], target])))
-        
+        ordered = sorted(nums)
+        N = len(nums)
+        result = []
+        for i in range(N):
+            if i > 0 and ordered[i] == ordered[i-1]: 
+                continue
+
+            p1 = i + 1
+            p2 = len(nums) - 1
+            while p1 < p2:
+                current = ordered[i] + ordered[p1] + ordered[p2]
+                if current == 0:
+                    result.append([ordered[i], ordered[p1], ordered[p2]])
+                    p1 = get_next(ordered, p1, 1)
+                elif current < 0:
+                    p1 = get_next(ordered, p1, 1)
+                else:
+                    p2 = get_next(ordered, p2, -1)
         return result
-        
+
+
         
