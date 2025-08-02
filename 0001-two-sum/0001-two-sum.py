@@ -1,15 +1,11 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-      numMaps = {}
-      n = len(nums)
-      
-      for i in range(n):
-        numMaps[nums[i]] = i
-      
-      for i in range(n):
-        complement = target - nums[i]
-        if complement in numMaps and numMaps[complement] != i:
-          return [i, numMaps[complement]]
-
-
+        maps = {}
+        for i, n in enumerate(nums):
+            maps[n] = i
+        
+        for i, n in enumerate(nums):
+            need = target - n
+            if need in maps and maps[need] > i:
+                return [i, maps[need]]
         
